@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ public class Tutor {
 	private String name;
 	private int salary;
 
-	@OneToMany(mappedBy = "supervisor") // If only this annotation is used, it
+	@OneToMany(mappedBy = "supervisor", cascade={ CascadeType.PERSIST, CascadeType.REMOVE }) // If only this annotation is used, it
 										// will create third linking table
 	private Set<Student> supervisionGroup;
 
@@ -98,6 +99,11 @@ public class Tutor {
 		} else if (!staffId.equals(other.staffId))
 			return false;
 		return true;
+	}
+
+	public void createStudentAndAddToSupervisorGroup(String studentName, String enrollmentId) {
+		Student student = new Student(studentName, enrollmentId);
+		this.addStudentToSupervisionGorup(student);
 	}
 
 }
