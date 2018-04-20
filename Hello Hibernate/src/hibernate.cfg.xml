@@ -22,6 +22,7 @@
         <property name="hbm2ddl.auto">update</property>
 
    		<mapping class="com.piyushpatel2005.domain.Student"/>
+   		<mapping class="com.piyushpatel2005.domain.Tutor" />
     </session-factory>
 
 </hibernate-configuration>
