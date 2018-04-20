@@ -2,6 +2,7 @@ package com.piyushpatel2005.testharness;
 
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -36,7 +37,7 @@ public class HibernateTest {
 //		session.save(myStudent);
 //		session.save(newTutor);
 		
-		/*
+		
 		Tutor newTutor = new Tutor("ABC214", "Allen Servgi", 2344);
 		Student student1 = new Student("Rebecca Soni", "1-SON-2016");
 		Student student2 = new Student("Zou Kai", "2-KAI-2009");
@@ -48,22 +49,33 @@ public class HibernateTest {
 		session.save(newTutor);
 		
 		newTutor.addStudentToSupervisionGorup(student1);
-		newTutor.addStudentToSupervisionGorup(student2);
-		newTutor.addStudentToSupervisionGorup(student3);
+//		student1.allocateSupervisor(newTutor);
 		
-		List<Student> students = newTutor.getSupervisionGroup();
-		for(Student student: students) {
-			System.out.println(student);
-		}
-		*/
+		newTutor.addStudentToSupervisionGorup(student2);
+//		student2.allocateSupervisor(newTutor);
+		
+		newTutor.addStudentToSupervisionGorup(student3);
+//		student3.allocateSupervisor(newTutor);
+		
+		
+		
+//		Set<Student> students = newTutor.getSupervisionGroup();
+//		for(Student student: students) {
+//			System.out.println(student);
+//		}
+		
 		
 		
 		Tutor myTutor =(Tutor) session.get(Tutor.class, 1);
-		List<Student> students = myTutor.getSupervisionGroup();
+		Set<Student> students = myTutor.getSupervisionGroup();
 		
 		for(Student s: students) {
 			System.out.println(s);
 		}
+		
+		Student myStudent = (Student) session.get(Student.class, 2);
+		Tutor myStudentTutor = myStudent.getSupervisor();
+		System.out.println(myStudentTutor);
 		
 		
 		

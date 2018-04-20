@@ -27,9 +27,9 @@ public class Student
     private String enrollmentID;
     private String name;
     
-//    @ManyToOne
-//    @JoinColumn(name="TUTOR_FK")
-//    private Tutor supervisor; 
+    @ManyToOne
+    @JoinColumn(name="TUTOR_FK")
+    private Tutor supervisor; 
 
     /**
      * Required by Hibernate when we have other constructors
@@ -42,11 +42,11 @@ public class Student
     /**
      * Initialises a student with a particular tutor
      */
-//    public Student(String name, Tutor tutor)
-//    {
-//    	this.name = name;
-//    	this.supervisor = tutor;
-//    }
+    public Student(String name, Tutor tutor)
+    {
+    	this.name = name;
+    	this.supervisor = tutor;
+    }
     
     
     /**
@@ -56,7 +56,7 @@ public class Student
     {
     	this.name = name;
     	this.enrollmentID = enrollmentID;
-//    	this.supervisor = null;
+    	this.supervisor = null;
     }
     
 
@@ -103,15 +103,16 @@ public class Student
 		return 0;
 	}
 
-//	public void allocateSupervisor(Tutor newTutor) {
-//		this.supervisor = newTutor;
-//	}
-//
-//	public String getSupervisorName() {
-//		return this.supervisor.getName();
-//	}
-//
-//	public Tutor getSupervisor() {
-//		return this.supervisor;
-//	}
+	public void allocateSupervisor(Tutor newTutor) {
+		this.supervisor = newTutor;
+		newTutor.getModifiableSupervisionGroup().add(this);
+	}
+
+	public String getSupervisorName() {
+		return this.supervisor.getName();
+	}
+
+	public Tutor getSupervisor() {
+		return this.supervisor;
+	}
 }

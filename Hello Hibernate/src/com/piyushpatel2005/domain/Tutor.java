@@ -1,8 +1,9 @@
 package com.piyushpatel2005.domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,11 +23,8 @@ public class Tutor {
 	private String name;
 	private int salary;
 	
-	@OneToMany // If only this annotation is used, it will create third linking table
-//	@OrderBy("name")
-	@OrderColumn(name="student_order")
-	@JoinColumn(name="TUTOR_FK")
-	private List<Student> supervisionGroup;
+	@OneToMany (mappedBy = "supervisor") // If only this annotation is used, it will create third linking table
+	private Set<Student> supervisionGroup;
 	
 	public Tutor() {}
 
@@ -36,15 +34,20 @@ public class Tutor {
 		this.staffId = staffId;
 		this.name = name;
 		this.salary = salary;
-		this.supervisionGroup = new ArrayList<>();
+		this.supervisionGroup = new HashSet<>();
 	}
 	
 	public void addStudentToSupervisionGorup(Student studentToAdd) {
 		this.supervisionGroup.add(studentToAdd);
+		studentToAdd.allocateSupervisor(this);
 	}
 	
-	public List<Student> getSupervisionGroup() {
-		return Collections.unmodifiableList(supervisionGroup);
+	public Set<Student> getSupervisionGroup() {
+		return Collections.unmodifiableSet(supervisionGroup);
+	}
+	
+	public Set<Student> getModifiableSupervisionGroup() {
+		return this.supervisionGroup;
 	}
 
 	public String getName() {
@@ -52,7 +55,9 @@ public class Tutor {
 		
 	}
 	
-	
+	public String toString() {
+		return "Tutor: " + this.name  + "( " + this.staffId + ")";
+	}
 	
 	
 }
