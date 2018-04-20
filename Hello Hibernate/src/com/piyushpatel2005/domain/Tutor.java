@@ -12,23 +12,23 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-//@Entity
+@Entity
 public class Tutor {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-//	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true)
 	private String staffId;
 	private String name;
 	private int salary;
 
-//	@OneToMany(mappedBy = "supervisor") // If only this annotation is used, it
+	@OneToMany(mappedBy = "supervisor") // If only this annotation is used, it
 										// will create third linking table
 	private Set<Student> supervisionGroup;
 
-//	@ManyToMany(mappedBy = "qualifiedTutors")
+	@ManyToMany(mappedBy = "qualifiedTutors")
 	private Set<Subject> subjectsQualifiedToTeach;
 
 	public Tutor() {

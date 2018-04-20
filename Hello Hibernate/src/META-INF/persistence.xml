@@ -9,8 +9,8 @@
    <persistence-unit name="myDatabaseConfig" 
                      transaction-type="RESOURCE_LOCAL">
       <properties>         
-	     <property name="hibernate.connection.driver_class" value="!!TODO!!"/>
-         <property name="hibernate.connection.url" value="!!TODO!!"/>
+	     <property name="hibernate.connection.driver_class" value="org.apache.derby.jdbc.ClientDriver"/>
+         <property name="hibernate.connection.url" value="jdbc:derby://localhost/MyDatabase"/>
 
          <!-- we do not need user name and password for the course
          <property name="hibernate.connection.username" value=""/>
@@ -18,9 +18,9 @@
          -->
          
          <!--  tweak these to your own needs -->
-         <property name="hibernate.show_sql" value="true" />
+         <property name="hibernate.show_sql" value="false" />
          <property name="hibernate.format_sql" value="true" />
-         <property name="hibernate.hbm2ddl.auto" value="update" />                  
+         <property name="hibernate.hbm2ddl.auto" value="create" />                  
       </properties>    
                                               
    </persistence-unit>             
