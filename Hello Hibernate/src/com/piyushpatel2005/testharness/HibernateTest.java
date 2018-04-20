@@ -25,13 +25,16 @@ public class HibernateTest {
 //		session.save(myStudent);
 
 		// Here is where we do some task
-		Student myStudent = (Student)session.get(Student.class, 3);
-		myStudent.setTutor("David Rocco");
+//		Student myStudent = (Student)session.get(Student.class, 3);
+//		myStudent.setTutor("David Rocco");
 		
-		System.out.println(myStudent);
+//		System.out.println(myStudent);
 		
 //		session.delete(myStudent);
 //		System.out.println(myStudent);
+		
+		Student myStudent = new Student("Kathleen Maria");
+		session.save(myStudent);
 		
 		tx.commit();
 		session.close();
