@@ -22,7 +22,8 @@
         <property name="hbm2ddl.auto">create</property>
 
    		<mapping class="com.piyushpatel2005.domain.Student"/>
-   		<mapping class="com.piyushpatel2005.domain.Tutor" />
+   		<!-- <mapping class="com.piyushpatel2005.domain.Tutor" /> -->
+   		<mapping resource="com/piyushpatel2005/domain/Tutor.hbm.xml" />
    		<mapping class="com.piyushpatel2005.domain.Subject" />
     </session-factory>
 

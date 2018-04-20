@@ -1,8 +1,6 @@
 package com.piyushpatel2005.testharness;
 
 
-import java.util.Set;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,6 +9,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 import com.piyushpatel2005.domain.Student;
+import com.piyushpatel2005.domain.Subject;
 import com.piyushpatel2005.domain.Tutor;
 
 public class HibernateTest {
@@ -22,23 +21,28 @@ public class HibernateTest {
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
 		
-		Tutor t1 = new Tutor("ABC234", "David Banks", 2342);
-		session.save(t1);
+		Tutor tutor = new Tutor("ABC23", "Ahmed Ansari", 234);
+		session.save(tutor);
 		
-		Student s1 = new Student("Marco Fortes", "1-FOR-2018");
-		t1.addStudentToSupervisionGorup(s1);
-		
-		Student s2 = new Student("Piyuhs ", "1-PAT-2018");
-		t1.addStudentToSupervisionGorup(s2);
-		
-		Student s3 = new Student("Angie Brandy", "3-BAT-2009");
-		t1.addStudentToSupervisionGorup(s3);
-		
-		Set<Student> allStudents = t1.getSupervisionGroup();
-		System.out.println(allStudents.size());
+		Student s1 = new Student("Rachel Monic", "1-MON-2008");
 		session.save(s1);
+		Student s2 = new Student("Missy Frank", "2-FRA-2011");
 		session.save(s2);
-		session.save(s3);
+		
+		Subject sub1 = new Subject("Math", 3);
+		Subject sub2 = new Subject("CS101", 6);
+		session.save(sub1);
+		session.save(sub2);
+		
+		Tutor tutor2 = new Tutor("DFS234", "Paul Adams", 2342);
+		session.save(tutor2);
+		
+		tutor.addSubjectToQualifications(sub1);
+		tutor.addSubjectToQualifications(sub2);
+		tutor2.addSubjectToQualifications(sub2);
+		
+		tutor.addStudentToSupervisionGorup(s1);
+		tutor.addStudentToSupervisionGorup(s2);
 		
 		
 		tx.commit();
