@@ -1,17 +1,16 @@
 package com.piyushpatel2005.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class Tutor {
@@ -24,9 +23,10 @@ public class Tutor {
 	private int salary;
 	
 	@OneToMany // If only this annotation is used, it will create third linking table
-	@MapKey(name="enrollmentID") // required for mapping to Map collection types
+//	@OrderBy("name")
+	@OrderColumn(name="student_order")
 	@JoinColumn(name="TUTOR_FK")
-	private Map<String, Student> supervisionGroup;
+	private List<Student> supervisionGroup;
 	
 	public Tutor() {}
 
@@ -36,15 +36,15 @@ public class Tutor {
 		this.staffId = staffId;
 		this.name = name;
 		this.salary = salary;
-		this.supervisionGroup = new HashMap<>();
+		this.supervisionGroup = new ArrayList<>();
 	}
 	
 	public void addStudentToSupervisionGorup(Student studentToAdd) {
-		this.supervisionGroup.put(studentToAdd.getEnrollmentID(), studentToAdd);
+		this.supervisionGroup.add(studentToAdd);
 	}
 	
-	public Map<String, Student> getSupervisionGroup() {
-		return Collections.unmodifiableMap(supervisionGroup);
+	public List<Student> getSupervisionGroup() {
+		return Collections.unmodifiableList(supervisionGroup);
 	}
 
 	public String getName() {

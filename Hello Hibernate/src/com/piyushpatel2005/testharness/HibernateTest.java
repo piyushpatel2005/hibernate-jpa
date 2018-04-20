@@ -1,7 +1,7 @@
 package com.piyushpatel2005.testharness;
 
 
-import java.util.Map;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -51,7 +51,7 @@ public class HibernateTest {
 		newTutor.addStudentToSupervisionGorup(student2);
 		newTutor.addStudentToSupervisionGorup(student3);
 		
-		Set<Student> students = newTutor.getSupervisionGroup();
+		List<Student> students = newTutor.getSupervisionGroup();
 		for(Student student: students) {
 			System.out.println(student);
 		}
@@ -59,14 +59,13 @@ public class HibernateTest {
 		
 		
 		Tutor myTutor =(Tutor) session.get(Tutor.class, 1);
-		Map<String, Student> students = myTutor.getSupervisionGroup();
+		List<Student> students = myTutor.getSupervisionGroup();
 		
-		for(Student s: students.values()) {
+		for(Student s: students) {
 			System.out.println(s);
 		}
 		
-		Student requiredStudent = students.get("2-KAI-2009");
-		System.out.println("Found student " + requiredStudent);
+		
 		
 		tx.commit();
 		session.close();
