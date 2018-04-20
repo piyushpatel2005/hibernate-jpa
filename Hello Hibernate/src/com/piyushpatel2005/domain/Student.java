@@ -52,9 +52,10 @@ public class Student
     /**
      * Initialises a student with no pre set tutor
      */
-    public Student(String name)
+    public Student(String name, String enrollmentID)
     {
     	this.name = name;
+    	this.enrollmentID = enrollmentID;
 //    	this.supervisor = null;
     }
     
