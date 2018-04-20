@@ -1,4 +1,4 @@
-package com.virtualpairprogrammers.domain;
+package com.piyushpatel2005.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,11 +9,25 @@ import javax.persistence.Id;
  * Represents a Student enrolled in the college management
  * system (CMS)
  */
+
+@Entity
 public class Student
 {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	
     private String enrollmentID;
     private String name;
     private String tutorName; // This will become a class soon
+    
+    /**
+     * Required by Hibernate when we have other constructors
+     */
+    public Student() 
+    {
+    	
+    }
     
     /**
      * Initialises a student with a particular tutor
@@ -40,5 +54,9 @@ public class Student
     	// to remember that classes aren't just get/set pairs - we expect
     	// business logic in here as well.
     	return 0;
+    }
+    
+    public String toString() {
+    	return this.name;
     }
 }

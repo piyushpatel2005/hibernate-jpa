@@ -19,7 +19,7 @@
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">update</property>
 
-   		<mapping class="com.virtualpairprogrammers.domain.Student"/>
+   		<mapping class="com.piyushpatel2005.domain.Student"/>
     </session-factory>
 
 </hibernate-configuration>
