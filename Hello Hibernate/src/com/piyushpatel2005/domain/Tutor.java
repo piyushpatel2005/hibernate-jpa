@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
@@ -26,6 +27,9 @@ public class Tutor {
 	@OneToMany (mappedBy = "supervisor") // If only this annotation is used, it will create third linking table
 	private Set<Student> supervisionGroup;
 	
+	@ManyToMany(mappedBy="qualifiedTutors")
+	private Set<Subject> subjectsQualifiedToTeach;
+	
 	public Tutor() {}
 
 	// business constructor
@@ -35,6 +39,12 @@ public class Tutor {
 		this.name = name;
 		this.salary = salary;
 		this.supervisionGroup = new HashSet<>();
+		this.subjectsQualifiedToTeach = new HashSet<>();
+	}
+	
+	public void addSubjectToQualifications(Subject subject) {
+		this.subjectsQualifiedToTeach.add(subject);
+		subject.getQualifiedTutors().add(this);
 	}
 	
 	public void addStudentToSupervisionGorup(Student studentToAdd) {
@@ -57,6 +67,10 @@ public class Tutor {
 	
 	public String toString() {
 		return "Tutor: " + this.name  + "( " + this.staffId + ")";
+	}
+
+	public Set<Subject> getSubjects() {
+		return this.subjectsQualifiedToTeach;
 	}
 	
 	

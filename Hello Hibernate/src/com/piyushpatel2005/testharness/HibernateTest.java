@@ -1,9 +1,6 @@
 package com.piyushpatel2005.testharness;
 
 
-import java.util.List;
-import java.util.Set;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,6 +9,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 import com.piyushpatel2005.domain.Student;
+import com.piyushpatel2005.domain.Subject;
 import com.piyushpatel2005.domain.Tutor;
 
 public class HibernateTest {
@@ -27,36 +25,49 @@ public class HibernateTest {
 		
 		// Create a new tutor and a student 
 		// Make student be supervised by a tutor
-//		Student myStudent = new Student("Alister Crook");
-//		Tutor newTutor  = new Tutor("XYZ123", "John Ahmed", 30000);
-//		
-//		myStudent.allocateSupervisor(newTutor);
-//		
-//		// print out supervisor for this tutor
-//		System.out.println(myStudent.getSupervisorName());
-//		session.save(myStudent);
-//		session.save(newTutor);
+		Student myStudent = new Student("Alister Crook", "5-CRO-2009");
+		Tutor newTutor  = new Tutor("XYZ123", "John Ahmed", 30000);
 		
+		myStudent.allocateSupervisor(newTutor);
 		
-		Tutor newTutor = new Tutor("ABC214", "Allen Servgi", 2344);
-		Student student1 = new Student("Rebecca Soni", "1-SON-2016");
-		Student student2 = new Student("Zou Kai", "2-KAI-2009");
-		Student student3 = new Student("Chritopher Mccay", "3-MCC-2013");
-		
-		session.save(student1);
-		session.save(student2);
-		session.save(student3);
+		// print out supervisor for this tutor
+		System.out.println(myStudent.getSupervisorName());
+		session.save(myStudent);
 		session.save(newTutor);
 		
-		newTutor.addStudentToSupervisionGorup(student1);
-//		student1.allocateSupervisor(newTutor);
+		myStudent.allocateSupervisor(newTutor);
+		System.out.println(myStudent.getSupervisorName());
 		
-		newTutor.addStudentToSupervisionGorup(student2);
-//		student2.allocateSupervisor(newTutor);
+		// test creation of subjects
+		Subject subject1 = new Subject("Math", 3);
+		Subject subject2 = new Subject("Science", 6);
 		
-		newTutor.addStudentToSupervisionGorup(student3);
-//		student3.allocateSupervisor(newTutor);
+		session.save(subject1);
+		session.save(subject2);
 		
+
+		newTutor.addSubjectToQualifications(subject1);
+		newTutor.addSubjectToQualifications(subject2);
+		
+		Tutor secondTutor = new Tutor("GH2423", "Anand Soman", 23423);
+		session.save(secondTutor);
+		subject2.addTutorToSubject(secondTutor);
+		
+//		Tutor newTutor = new Tutor("ABC214", "Allen Servgi", 2344);
+//		Student student1 = new Student("Rebecca Soni", "1-SON-2016");
+//		Student student2 = new Student("Zou Kai", "2-KAI-2009");
+//		Student student3 = new Student("Chritopher Mccay", "3-MCC-2013");
+//		
+//		session.save(student1);
+//		session.save(student2);
+//		session.save(student3);
+//		session.save(newTutor);
+//		
+//		newTutor.addStudentToSupervisionGorup(student1);
+//		
+//		newTutor.addStudentToSupervisionGorup(student2);
+//		
+//		newTutor.addStudentToSupervisionGorup(student3);
 		
 		
 //		Set<Student> students = newTutor.getSupervisionGroup();
@@ -66,16 +77,16 @@ public class HibernateTest {
 		
 		
 		
-		Tutor myTutor =(Tutor) session.get(Tutor.class, 1);
-		Set<Student> students = myTutor.getSupervisionGroup();
-		
-		for(Student s: students) {
-			System.out.println(s);
-		}
-		
-		Student myStudent = (Student) session.get(Student.class, 2);
-		Tutor myStudentTutor = myStudent.getSupervisor();
-		System.out.println(myStudentTutor);
+//		Tutor myTutor =(Tutor) session.get(Tutor.class, 1);
+//		Set<Student> students = myTutor.getSupervisionGroup();
+//		
+//		for(Student s: students) {
+//			System.out.println(s);
+//		}
+//		
+//		Student myStudent = (Student) session.get(Student.class, 2);
+//		Tutor myStudentTutor = myStudent.getSupervisor();
+//		System.out.println(myStudentTutor);
 		
 		
 		
