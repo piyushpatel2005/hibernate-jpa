@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -18,6 +19,7 @@ import javax.persistence.Transient;
  */
 
 @Entity
+@SecondaryTable(name="TBL_ADDRESS")
 public class Student {
 
 	// Now, using property access using setters and getters, so annotations are
@@ -34,8 +36,14 @@ public class Student {
 	@JoinColumn(name = "TUTOR_FK")
 	private Tutor supervisor;
 
-	@Embedded
-	private Address address;
+	@Column(table="TBL_ADDRESS")
+	private String street;
+	
+	@Column(table="TBL_ADDRESS")
+	private String city;
+	
+	@Column(table="TBL_ADDRESS", name="ZIP_OR_POSTCODE")
+	private String zipOrPostcode;
 
 	/**
 	 * Required by Hibernate when we have other constructors
@@ -51,13 +59,14 @@ public class Student {
 		this.name = name;
 		this.enrollmentID = enrollmentID;
 		this.supervisor = null;
-		this.address = new Address(street, city, zipOrPostcode);
+		this.street = street;
+		this.city = city;
+		this.zipOrPostcode = zipOrPostcode;
 	}
 	
 	public Student(String name, String enrollmentId) {
 		this.name = name;
 		this.enrollmentID = enrollmentId;
-		this.address = null;
 	}
 
 	public int getId() {
@@ -73,7 +82,7 @@ public class Student {
 	}
 
 	public String toString() {
-		return this.name + " lives at " + this.address;
+		return this.name + " lives at " + this.street + ", " + this.city;
 	}
 
 	public String getEnrollmentID() {
@@ -113,14 +122,6 @@ public class Student {
 
 	public Tutor getSupervisor() {
 		return this.supervisor;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
 	}
 
 	@Override
