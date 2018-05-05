@@ -101,7 +101,7 @@ public class Tutor {
 		return true;
 	}
 
-	public void createStudentAndAddToSupervisorGroup(String studentName, String enrollmentId, String street, String city, String zipOrPostcode) {
+	public void createStudentAndAddToSupervisionGroup(String studentName, String enrollmentId, String street, String city, String zipOrPostcode) {
 		Student student = new Student(studentName, enrollmentId, street, city, zipOrPostcode);
 		this.addStudentToSupervisionGorup(student);
 	}
