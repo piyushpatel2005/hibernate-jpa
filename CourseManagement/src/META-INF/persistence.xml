@@ -8,6 +8,7 @@
              
    <persistence-unit name="myDatabaseConfig" 
                      transaction-type="RESOURCE_LOCAL">
+      <mapping-file>META-INF/student.queries.xml</mapping-file>
       <properties>         
 	     <property name="hibernate.connection.driver_class" value="org.apache.derby.jdbc.ClientDriver"/>
          <property name="hibernate.connection.url" value="jdbc:derby://localhost/MyDatabase"/>

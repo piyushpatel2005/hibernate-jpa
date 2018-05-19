@@ -25,15 +25,11 @@ public class HibernateTestHarness
 		tx.begin();
 		
 		// let's do some queries!
-		String city = "Georgia";
-//		Query q = em.createQuery("select distinct tutor from Tutor as tutor join tutor.supervisionGroup as student where student.address.city=:city");
-//		q.setParameter("city", city);
-//		Query q = em.createQuery("select distinct student.supervisor from Student as student where student.address.city='Georgia'");
-		// Fluent API
-		List<Tutor> results = em.createQuery("select distinct tutor from Tutor as tutor join tutor.supervisionGroup as student where student.address.city=:city")
-				.setParameter("city", city)
+		List<Student> results = em.createNamedQuery("searchByName")
+				.setParameter("name", "Marco Fortes")
 				.getResultList();
-		for(Tutor next: results) {
+		
+		for(Student next: results) {
 			System.out.println(next);
 		}
 		
