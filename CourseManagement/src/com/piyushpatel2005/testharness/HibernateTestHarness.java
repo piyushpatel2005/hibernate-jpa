@@ -25,12 +25,18 @@ public class HibernateTestHarness
 		tx.begin();
 		
 		// let's do some queries!
-		List<Object[]> results = em.createQuery("select student.name, student.enrollmentID from Student as student")
-				.getResultList();
+//		List<Student> allStudents = em.createQuery("from Student").getResultList();
+//		int numberOfStudents = allStudents.size();
+		long numberOfStudents = (Long) em.createQuery("select count(student) from Student as student").getSingleResult();
+		System.out.println(numberOfStudents);
 		
-		for(Object[] next: results) {
-			System.out.println("Name: " + next[0]);
-			System.out.println("Enrollment ID: " + next[1]);
+		double averageSemesterLength = (Double) em.createQuery("select avg(subject.numberOfSemesters) from Subject as subject").getSingleResult();
+		System.out.println(averageSemesterLength);
+		
+		List<Tutor> allTutors = em.createQuery("from Tutor").getResultList();
+		
+		for(Tutor next: allTutors) {
+			next.doubleSalary();
 		}
 		
 		tx.commit();
@@ -52,18 +58,18 @@ public class HibernateTestHarness
 		em.persist(history);
 
 		// This tutor will be very busy, with lots of students
-		Tutor t1 = new Tutor("ABC123", "David Banks", 2939393);
+		Tutor t1 = new Tutor("ABC123", "David Banks", 1000);
 		t1.addSubjectToQualifications(mathematics);
 		t1.addSubjectToQualifications(science);
 		
 		// This tutor is new and has no students
 		// But he will be able to teach science and mathematics
-		Tutor t2 = new Tutor("DEF456", "Alan Bridges", 0);
+		Tutor t2 = new Tutor("DEF456", "Alan Bridges", 15000);
 		t2.addSubjectToQualifications(mathematics);
 		t2.addSubjectToQualifications(science);
 		
 		// This tutor is the only tutor who can teach History
-		Tutor t3 = new Tutor("GHI678", "Linda Histroia", 0);
+		Tutor t3 = new Tutor("GHI678", "Linda Histroia", 20000);
 		t3.addSubjectToQualifications(history);
 //		t3.addSubjectToQualifications(science);
 		

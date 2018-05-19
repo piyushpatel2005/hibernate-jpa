@@ -106,4 +106,8 @@ public class Tutor {
 		this.addStudentToSupervisionGorup(student);
 	}
 
+	public void doubleSalary() {
+		this.salary = this.salary * 2;
+	}
+
 }
