@@ -25,24 +25,14 @@ public class HibernateTestHarness
 		tx.begin();
 		
 		// let's do some queries!
-		String requiredName = "marco fortes";
-//		TypedQuery<Student> q = em.createQuery("from Student as student where student.name like '%k%'", Student.class);
-		TypedQuery<Student> q = em.createQuery("from Student as student where lower(student.name) like :name", Student.class);
-		q.setParameter("name", requiredName);
+		Tutor tutor = em.find(Tutor.class, 1);
+		TypedQuery<Student> q = em.createQuery("from Student as student where student.supervisor = :tutor", Student.class);
+		q.setParameter("tutor", tutor);
 		
 		List<Student> allStudents = q.getResultList();
 		for(Student student: allStudents)  {
 			System.out.println(student);
 		}
-		
-		Query singleStudent = em.createQuery("FROM Student as student where student.enrollmentID='1-FOR-2010'", Student.class);
-		Student student = (Student) singleStudent.getSingleResult();
-		System.out.println(student);
-		
-//		String requiredName = "marco fortes";
-//		Query q = em.createQuery("from Student as student where student.name  = :name");
-//		q.setParameter("name", requiredName);
-//		List<Student> results = q.getResultList();
 		
 		tx.commit();
 		em.close();
