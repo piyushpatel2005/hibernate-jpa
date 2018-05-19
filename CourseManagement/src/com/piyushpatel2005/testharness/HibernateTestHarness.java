@@ -25,12 +25,12 @@ public class HibernateTestHarness
 		tx.begin();
 		
 		// let's do some queries!
-		List<Student> results = em.createNamedQuery("searchByName")
-				.setParameter("name", "Marco Fortes")
+		List<Object[]> results = em.createQuery("select student.name, student.enrollmentID from Student as student")
 				.getResultList();
 		
-		for(Student next: results) {
-			System.out.println(next);
+		for(Object[] next: results) {
+			System.out.println("Name: " + next[0]);
+			System.out.println("Enrollment ID: " + next[1]);
 		}
 		
 		tx.commit();
