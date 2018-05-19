@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import com.piyushpatel2005.domain.Student;
 import com.piyushpatel2005.domain.Subject;
@@ -16,7 +16,6 @@ public class HibernateTestHarness
 {
 	public static EntityManagerFactory emf = Persistence.createEntityManagerFactory("myDatabaseConfig");
 
-	@SuppressWarnings("unchecked")
 	public static void main(String[] args)
 	{		
 		setUpData();
@@ -25,7 +24,7 @@ public class HibernateTestHarness
 		tx.begin();
 		
 		// let's do some queries!
-		Query q = em.createQuery("from Student");
+		TypedQuery<Student> q = em.createQuery("from Student", Student.class);
 		
 		List<Student> allStudents = q.getResultList();
 		for(Student student: allStudents)  {
