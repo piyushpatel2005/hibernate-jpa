@@ -25,13 +25,34 @@ public class HibernateTestHarness
 		tx.begin();
 		
 		// let's do some queries!
-		Tutor tutor = em.find(Tutor.class, 1);
-		TypedQuery<Student> q = em.createQuery("from Student as student where student.supervisor = :tutor", Student.class);
-		q.setParameter("tutor", tutor);
+		TypedQuery<Student> q = em.createQuery("from Student as student where student.address.city = :name", Student.class);
+		
+		q.setParameter("name", "Georgia");
 		
 		List<Student> allStudents = q.getResultList();
 		for(Student student: allStudents)  {
 			System.out.println(student);
+		}
+		
+		TypedQuery<Tutor> tutorQuery = em.createQuery("from Tutor as tutor where tutor.supervisionGroup is empty", Tutor.class);
+		List<Tutor> tutors = tutorQuery.getResultList();
+		for(Tutor t: tutors) {
+			System.out.println(t);
+		}
+		
+		tutorQuery = em.createQuery("from Tutor as tutor where tutor.supervisionGroup is not empty", Tutor.class);
+		tutors = tutorQuery.getResultList();
+		for(Tutor t: tutors) {
+			System.out.println(t);
+		}
+		
+		Subject science = em.find(Subject.class, 2);
+		// list of all students whose supervisor can teach science
+		Query scienceQuery = em.createQuery("from Student as student where :subject member of student.supervisor.subjectsQualifiedToTeach");
+		scienceQuery.setParameter("subject", science);
+		List<Student> scienceTutors = scienceQuery.getResultList();
+		for(Student t: scienceTutors) {
+			System.out.println(t);
 		}
 		
 		tx.commit();
