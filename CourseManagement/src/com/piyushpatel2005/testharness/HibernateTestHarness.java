@@ -25,18 +25,17 @@ public class HibernateTestHarness
 		tx.begin();
 		
 		// let's do some queries!
-//		List<Student> allStudents = em.createQuery("from Student").getResultList();
-//		int numberOfStudents = allStudents.size();
-		long numberOfStudents = (Long) em.createQuery("select count(student) from Student as student").getSingleResult();
-		System.out.println(numberOfStudents);
+		// more efficient
+		em.createQuery("update Tutor as tutor set tutor.salary = tutor.salary * 2").executeUpdate();
 		
-		double averageSemesterLength = (Double) em.createQuery("select avg(subject.numberOfSemesters) from Subject as subject").getSingleResult();
-		System.out.println(averageSemesterLength);
+		List<Object[]> results = em.createNativeQuery("select s.name, s.enrollmentID from student s").getResultList();
+		for(Object[] next : results) {
+			System.out.println(next[0] +", " + next[1]);
+		}
 		
-		List<Tutor> allTutors = em.createQuery("from Tutor").getResultList();
-		
-		for(Tutor next: allTutors) {
-			next.doubleSalary();
+		List<Student> allStudents = em.createNativeQuery("select * from student s", Student.class).getResultList();
+		for(Student student: allStudents) {
+			System.out.println(student);
 		}
 		
 		tx.commit();
