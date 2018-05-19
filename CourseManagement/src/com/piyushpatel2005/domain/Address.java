@@ -11,6 +11,8 @@ public class Address {
 	
 	@Column(name="zip_or_postcode")
 	private String zipOrPostCode;
+	
+	public Address() {}
 
 	public Address(String street, String city, String zipOrPostCode) {
 		super();

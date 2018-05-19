@@ -14,3 +14,4 @@ RemoteSystemsTempFiles
 **/target
 **/.worksheet
 **/.buildpath
+derby.log
