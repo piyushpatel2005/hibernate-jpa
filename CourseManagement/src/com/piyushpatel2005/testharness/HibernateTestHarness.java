@@ -24,7 +24,7 @@ public class HibernateTestHarness
 		tx.begin();
 		
 		// let's do some queries!
-		TypedQuery<Student> q = em.createQuery("from Student", Student.class);
+		TypedQuery<Student> q = em.createQuery("from Student as student where student.name like '%k%'", Student.class);
 		
 		List<Student> allStudents = q.getResultList();
 		for(Student student: allStudents)  {
