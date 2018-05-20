@@ -9,9 +9,11 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
+import com.piyushpatel2005.domain.Address;
 import com.piyushpatel2005.domain.Student;
 import com.piyushpatel2005.domain.Subject;
 import com.piyushpatel2005.domain.Tutor;
@@ -28,24 +30,43 @@ public class HibernateTestHarness
 		tx.begin();
 		
 		// let's do some queries!
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<Student> criteria = builder.createQuery(Student.class);
+//		CriteriaBuilder builder = em.getCriteriaBuilder();
+//		CriteriaQuery<Student> criteria = builder.createQuery(Student.class);
 		
 		// from clause
-		Root<Student> root = criteria.from(Student.class);
+//		Root<Student> root = criteria.from(Student.class);
 		
 //		Path<Tutor> tutor = root.get("supervisor");
 //		criteria.where(builder.equal(tutor.get("name"), "David Banks"));
 		
-		Path<String> nameProperty = root.get("name");
-		criteria.where(builder.like(nameProperty, "%Kat%"));
+//		Path<String> nameProperty = root.get("name");
+//		criteria.where(builder.like(nameProperty, "%Kat%"));
+//		
+//		Query q = em.createQuery(criteria);
+//		List<Student> results = q.getResultList();
+//		
+//		for(Student next: results) {
+//			System.out.println(next);
+//		}
+		
+		// get tutors whose students live in Georgia
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Tutor> criteria = builder.createQuery(Tutor.class).distinct(true);
+		
+		Root<Tutor> root = criteria.from(Tutor.class);
+		Join<Tutor, Student> students = root.join("supervisionGroup");
+		Path<Address> address = students.get("address");
+		Path<String> city = address.get("city");
+		
+		criteria.where(builder.equal(city, "Georgia"));
 		
 		Query q = em.createQuery(criteria);
-		List<Student> results = q.getResultList();
 		
-		for(Student next: results) {
+		List<Tutor> results = q.getResultList();
+		for(Tutor next: results) {
 			System.out.println(next);
 		}
+		
 		
 		tx.commit();
 		em.close();
