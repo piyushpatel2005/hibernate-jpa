@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
 import com.piyushpatel2005.domain.Student;
@@ -33,7 +34,11 @@ public class HibernateTestHarness
 		// from clause
 		Root<Student> root = criteria.from(Student.class);
 		
-		criteria.where(builder.equal(root.get("name"), "Marco Fortes"));
+//		Path<Tutor> tutor = root.get("supervisor");
+//		criteria.where(builder.equal(tutor.get("name"), "David Banks"));
+		
+		Path<String> nameProperty = root.get("name");
+		criteria.where(builder.like(nameProperty, "%Kat%"));
 		
 		Query q = em.createQuery(criteria);
 		List<Student> results = q.getResultList();
