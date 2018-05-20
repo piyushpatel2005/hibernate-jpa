@@ -6,8 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 
 import com.piyushpatel2005.domain.Student;
 import com.piyushpatel2005.domain.Subject;
@@ -25,15 +26,13 @@ public class HibernateTestHarness
 		tx.begin();
 		
 		// let's do some queries!
-		// more efficient
-		em.createQuery("update Tutor as tutor set tutor.salary = tutor.salary * 2").executeUpdate();
+		Session session = (Session) em.getDelegate();
 		
-		List<Object[]> results = em.createNativeQuery("select s.name, s.enrollmentID from student s").getResultList();
-		for(Object[] next : results) {
-			System.out.println(next[0] +", " + next[1]);
-		}
+		// Criteria API
+		Criteria criteria = session.createCriteria(Student.class);
+		List<Student> allStudents = criteria.list();
 		
-		List<Student> allStudents = em.createNativeQuery("select * from student s", Student.class).getResultList();
+//		List<Student> allStudents = em.createNativeQuery("select * from student s", Student.class).getResultList();
 		for(Student student: allStudents) {
 			System.out.println(student);
 		}
