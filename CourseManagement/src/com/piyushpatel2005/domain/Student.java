@@ -1,7 +1,7 @@
 package com.piyushpatel2005.domain;
 
 import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorValue;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,12 +13,11 @@ import javax.persistence.Transient;
  */
 
 @Entity
-@DiscriminatorValue(value="S")
 public class Student extends Person {
 
 	// Now, using property access using setters and getters, so annotations are
 	// on getters
-	
+	@Column(unique=true, nullable=false)
 	private String enrollmentID;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)

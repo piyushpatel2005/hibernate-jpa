@@ -29,8 +29,8 @@ public class HibernateTestHarness
 		em.persist(newStudent);
 		em.persist(newTutor);
 		
-		List<Student> people = em.createQuery("from Student").getResultList();
-		for(Student p: people) {
+		List<Person> people = em.createQuery("from Person").getResultList();
+		for(Person p: people) {
 			p.calculateReport();
 		}
 		

@@ -5,15 +5,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
-@DiscriminatorValue(value="T")
 public class Tutor extends Person {
-
+	@Column(unique=true, nullable=false)
 	private String staffId;
 	private int salary;
 

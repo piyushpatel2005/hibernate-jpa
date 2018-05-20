@@ -9,8 +9,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="PRESON_TYPE")
+@Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Person {
 
 	@Id
