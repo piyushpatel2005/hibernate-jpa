@@ -6,11 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.CriteriaSpecification;
-import org.hibernate.criterion.Restrictions;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import com.piyushpatel2005.domain.Student;
 import com.piyushpatel2005.domain.Subject;
@@ -28,24 +27,19 @@ public class HibernateTestHarness
 		tx.begin();
 		
 		// let's do some queries!
-		Session session = (Session) em.getDelegate();
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Student> criteria = builder.createQuery(Student.class);
 		
-		// Criteria API
-		Criteria criteria = session.createCriteria(Tutor.class);
-//		criteria.add(Restrictions.like("name", "%Marco%"));
-//		criteria.add(Restrictions.eq("name", "Kath Grainer"));
-//		criteria.createCriteria("supervisor").add(Restrictions.eq("name", "David Banks"));
-//		criteria.add(Restrictions.ilike("name", "%fortes%"));
-//		criteria.add(Restrictions.sizeGt("supervisionGroup", 1));
+		// from clause
+		Root<Student> root = criteria.from(Student.class);
 		
-		criteria.createAlias("supervisionGroup", "student");
-		criteria.add(Restrictions.eq("student.address.city", "Georgia"));
-		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-		List<Tutor> tutors = criteria.list();
+		criteria.where(builder.equal(root.get("name"), "Marco Fortes"));
 		
-//		List<Student> allStudents = em.createNativeQuery("select * from student s", Student.class).getResultList();
-		for(Tutor student: tutors) {
-			System.out.println(student);
+		Query q = em.createQuery(criteria);
+		List<Student> results = q.getResultList();
+		
+		for(Student next: results) {
+			System.out.println(next);
 		}
 		
 		tx.commit();
