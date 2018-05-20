@@ -18,17 +18,13 @@ import javax.persistence.Transient;
  */
 
 @Entity
-public class Student {
+public class Student extends Person {
 
 	// Now, using property access using setters and getters, so annotations are
 	// on getters
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-
+	
 	@Column(nullable = false, unique = true)
 	private String enrollmentID;
-	private String name;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "TUTOR_FK")
@@ -41,28 +37,25 @@ public class Student {
 	 * Required by Hibernate when we have other constructors
 	 */
 	public Student() {
-
+		super(null);
 	}
 
 	/**
 	 * Initialises a student with no pre set tutor
 	 */
 	public Student(String name, String enrollmentID, String street, String city, String zipOrPostcode) {
-		this.name = name;
+		super(name);
 		this.enrollmentID = enrollmentID;
 		this.supervisor = null;
 		this.address = new Address(street, city, zipOrPostcode);
 	}
 	
 	public Student(String name, String enrollmentId) {
-		this.name = name;
+		super(name);
 		this.enrollmentID = enrollmentId;
 		this.address = null;
 	}
 
-	public int getId() {
-		return this.id;
-	}
 
 	public double calculateGradePointAverage() {
 		// some complex business logic!
@@ -73,7 +66,7 @@ public class Student {
 	}
 
 	public String toString() {
-		return this.name + " lives at " + this.address;
+		return this.getName() + " lives at " + this.address;
 	}
 
 	public String getEnrollmentID() {
@@ -85,15 +78,7 @@ public class Student {
 	}
 
 	public String getName() {
-		return name.toUpperCase();
-	}
-
-	public void setName(String name) {
-		this.name = name.toUpperCase();
-	}
-
-	public void setId(int id) {
-		this.id = id;
+		return super.getName().toUpperCase();
 	}
 
 	@Transient
@@ -121,6 +106,10 @@ public class Student {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+	
+	public void calculateReport() {
+		System.out.println("Report for student " + this.getName());
 	}
 
 	@Override

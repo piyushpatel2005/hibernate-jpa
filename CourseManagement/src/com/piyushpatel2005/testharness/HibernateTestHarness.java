@@ -27,31 +27,16 @@ public class HibernateTestHarness
 
 	public static void main(String[] args)
 	{		
-		setUpData();
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		
 		// let's do some queries!
+		Student newStudent = new Student("Bill Jones", "1-JON-2011", "4 The Terrace Ave", "Chicago", "90993");
+		Tutor newTutor = new Tutor("99499", "Martha Reeves", 90000);
 		
-		// get tutors whose students live in Georgia
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<Tutor> criteria = builder.createQuery(Tutor.class).distinct(true);
-		
-		Root<Tutor> root = criteria.from(Tutor.class);
-		Join<Tutor, Student> students = root.join(Tutor_.supervisionGroup);
-		Path<Address> address = students.get(Student_.address);
-		Path<String> city = address.get(Address_.city);
-		
-		criteria.where(builder.equal(city, "Georgia"));
-		
-		TypedQuery<Tutor> q = em.createQuery(criteria);
-		
-		List<Tutor> results = q.getResultList();
-		for(Tutor next: results) {
-			System.out.println(next);
-		}
-		
+		em.persist(newStudent);
+		em.persist(newTutor);
 		
 		tx.commit();
 		em.close();

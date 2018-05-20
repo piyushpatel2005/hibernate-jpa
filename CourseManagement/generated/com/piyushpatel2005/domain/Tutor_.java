@@ -7,12 +7,10 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(Tutor.class)
-public abstract class Tutor_ {
+public abstract class Tutor_ extends com.piyushpatel2005.domain.Person_ {
 
 	public static volatile SetAttribute<Tutor, Student> supervisionGroup;
 	public static volatile SetAttribute<Tutor, Subject> subjectsQualifiedToTeach;
-	public static volatile SingularAttribute<Tutor, String> name;
-	public static volatile SingularAttribute<Tutor, Integer> id;
 	public static volatile SingularAttribute<Tutor, Integer> salary;
 	public static volatile SingularAttribute<Tutor, String> staffId;
 
