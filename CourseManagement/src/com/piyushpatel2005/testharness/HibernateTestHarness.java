@@ -6,20 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Root;
 
-import com.piyushpatel2005.domain.Address;
-import com.piyushpatel2005.domain.Address_;
+import com.piyushpatel2005.domain.Person;
 import com.piyushpatel2005.domain.Student;
-import com.piyushpatel2005.domain.Student_;
 import com.piyushpatel2005.domain.Subject;
 import com.piyushpatel2005.domain.Tutor;
-import com.piyushpatel2005.domain.Tutor_;
 
 public class HibernateTestHarness 
 {
@@ -37,6 +28,11 @@ public class HibernateTestHarness
 		
 		em.persist(newStudent);
 		em.persist(newTutor);
+		
+		List<Student> people = em.createQuery("from Student").getResultList();
+		for(Student p: people) {
+			p.calculateReport();
+		}
 		
 		tx.commit();
 		em.close();
