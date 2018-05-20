@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 
 import com.piyushpatel2005.domain.Student;
@@ -30,15 +31,20 @@ public class HibernateTestHarness
 		Session session = (Session) em.getDelegate();
 		
 		// Criteria API
-		Criteria criteria = session.createCriteria(Student.class);
+		Criteria criteria = session.createCriteria(Tutor.class);
 //		criteria.add(Restrictions.like("name", "%Marco%"));
 //		criteria.add(Restrictions.eq("name", "Kath Grainer"));
-		criteria.createCriteria("supervisor").add(Restrictions.eq("name", "David Banks"));
+//		criteria.createCriteria("supervisor").add(Restrictions.eq("name", "David Banks"));
 //		criteria.add(Restrictions.ilike("name", "%fortes%"));
-		List<Student> allStudents = criteria.list();
+//		criteria.add(Restrictions.sizeGt("supervisionGroup", 1));
+		
+		criteria.createAlias("supervisionGroup", "student");
+		criteria.add(Restrictions.eq("student.address.city", "Georgia"));
+		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		List<Tutor> tutors = criteria.list();
 		
 //		List<Student> allStudents = em.createNativeQuery("select * from student s", Student.class).getResultList();
-		for(Student student: allStudents) {
+		for(Tutor student: tutors) {
 			System.out.println(student);
 		}
 		
