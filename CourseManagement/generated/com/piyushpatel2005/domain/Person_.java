@@ -9,7 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Person_ {
 
 	public static volatile SingularAttribute<Person, String> name;
-	public static volatile SingularAttribute<Person, Integer> id;
+	public static volatile SingularAttribute<Person, String> id;
 
 }
 

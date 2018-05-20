@@ -9,17 +9,17 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class Person {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private String id;
 	private String name;
 	
 	public Person() {}
 	
-	public Person(String name) {
+	public Person(String id, String name) {
+		this.id = id;
 		this.name = name;
 	}
 	

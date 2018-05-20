@@ -25,12 +25,12 @@ public class Tutor extends Person {
 	private Set<Subject> subjectsQualifiedToTeach;
 
 	public Tutor() {
-		super(null);
+		super(null, null);
 	}
 
 	// business constructor
 	public Tutor(String staffId, String name, int salary) {
-		super(name);
+		super(staffId, name);
 		this.staffId = staffId;
 		this.salary = salary;
 		this.supervisionGroup = new HashSet<>();
